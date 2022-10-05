@@ -4,6 +4,7 @@ Available algorithms are:
 - Selection sort
 - Insertion sort
 - Merge sort
+- Quick sort
 - Binary search
 
 Projects were developed on Windows 10 with Visual Studio Code using mingw64 unless stated otherwise.
