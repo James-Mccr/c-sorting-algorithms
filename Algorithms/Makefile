@@ -1,6 +1,6 @@
 SHARED = obj\shared\Generate.o obj\shared\Search.o obj\shared\Sort.o
 
-all: setup compile link
+all: clean setup compile link
 
 setup:
 	mkdir bin
@@ -15,6 +15,7 @@ compile:
 	gcc -g -c src\SelectionSort.c -Iheaders -o obj\SelectionSort.o
 	gcc -g -c src\InsertionSort.c -Iheaders -o obj\InsertionSort.o
 	gcc -g -c src\MergeSort.c -Iheaders -o obj\MergeSort.o
+	gcc -g -c src\QuickSort.c -Iheaders -o obj\QuickSort.o
 	gcc -g -c src\Test.c -Iheaders -o obj\Test.o
 
 link: compile
@@ -22,9 +23,9 @@ link: compile
 	gcc obj\SelectionSort.o $(SHARED) -o bin\SelectionSort.exe
 	gcc obj\InsertionSort.o $(SHARED) -o bin\InsertionSort.exe
 	gcc obj\MergeSort.o $(SHARED) -o bin\MergeSort.exe
+	gcc obj\QuickSort.o $(SHARED) -o bin\QuickSort.exe
 	gcc obj\Test.o $(SHARED) -o bin\Test.exe
 
 clean:
-	del /Q bin
-	del /Q obj
-	del /Q obj\shared
+	rmdir /q /s bin
+	rmdir /q /s obj

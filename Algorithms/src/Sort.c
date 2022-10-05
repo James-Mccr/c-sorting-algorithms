@@ -1,6 +1,19 @@
 #include <stdlib.h>
 
-// sort integer array in ascending order
+int Swap(int* a, int* b)
+{
+    if (*a == *b)
+    {
+        return 0;
+    }
+
+    int t = *a;
+    *a = *b;
+    *b = t;
+    return 0;
+}
+
+// Sorts in ascending order
 int SelectionSort(int* array, int size)
 {
     for (int i = 0; i < size-1; i++)
@@ -9,16 +22,14 @@ int SelectionSort(int* array, int size)
         {
             if (array[i] > array[j])
             {
-                int t = array[i];
-                array[i] = array[j];
-                array[j] = t;
+                Swap(&array[i], &array[j]);
             }
         }
     }
     return 0;
 }
 
-// sort integer array in ascending order
+// Sorts in ascending order
 int InsertionSort(int* array, int size)
 {
     for (int i = 1; i < size; i++)
@@ -113,6 +124,7 @@ int MergeSplit(int* array, int* array2, int left, int right)
     return 0;
 }
 
+// Sorts in ascending order
 int MergeSort(int* array, int size)
 {
     int* array2 = malloc(size * sizeof(int));
@@ -125,6 +137,40 @@ int MergeSort(int* array, int size)
     MergeSplit(array, array2, 0, size-1);
 
     free(array2);
+
+    return 0;
+}
+
+int LomutoPartition(int* array, int left, int right)
+{
+    int pivot = array[right];
+    int i = left;
+
+    for (int j = left; j < right; j++)
+    {
+        if (array[j] < pivot)
+        {
+            Swap(&array[i++], &array[j]);
+        }
+    }
+
+    Swap(&array[i], &array[right]);
+    return i;
+
+}
+
+// Sorts in ascending order
+int QuickSort(int* array, int left, int right)
+{
+    if (left >= right)
+    {
+        return 0;
+    }
+
+    int pivotIndex = LomutoPartition(array, left, right);
+
+    QuickSort(array, left, pivotIndex-1);
+    QuickSort(array, pivotIndex+1, right);
 
     return 0;
 }

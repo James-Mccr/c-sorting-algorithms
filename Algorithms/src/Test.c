@@ -11,6 +11,18 @@ int max = 10;
 int size = 100000;
 int seed = 0;
 
+int Equals(int* a, int* b, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (!(a[i] == b[i]))
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
 int TestGenerateMin()
 {
     int* actual = Generate(min, max, size, seed);
@@ -45,18 +57,10 @@ int TestGenerateSize()
 {
     int* actual = Generate(0, 0, size, seed);
     int* expected = calloc(size, sizeof(int)); 
-    for (int i = 0; i < size; i++)
-    {
-        if (!(actual[i] == expected[i]))
-        {
-            free(actual);
-            free(expected);
-            return 0;
-        }
-    }
+    int flag = Equals(actual, expected, size);
     free(actual);
     free(expected);
-    return 1;
+    return flag;
 }
 
 int TestGenerateSeed()
@@ -64,16 +68,9 @@ int TestGenerateSeed()
     int lsize = 10;
     int* actual = Generate(min, max, lsize, seed);
     int expected[] = { 5,8,8,6,0,5,5,0,0,10 };
-    for (int i = 0; i < lsize; i++)
-    {
-        if (!(actual[i] == expected[i]))
-        {
-            free(actual);
-            return 0;
-        }
-    }
+    int flag = Equals(actual, expected, lsize);
     free(actual);
-    return 1;
+    return flag;
 }
 
 int TestMergeSort()
@@ -82,14 +79,8 @@ int TestMergeSort()
     int expected[] = { 0,1,2,3,4,5,6,7,8,9 };
     int size = sizeof(actual) / sizeof(int);
     MergeSort(actual, size);
-    for (int i = 0; i < size; i++)
-    {
-        if (!(actual[i] == expected[i]))
-        {
-            return 0;
-        }
-    }
-    return 1;
+    int flag = Equals(actual, expected, size);
+    return flag;
 }
 
 int TestSelectionSort()
@@ -98,14 +89,8 @@ int TestSelectionSort()
     int expected[] = { 0,1,2,3,4,5,6,7,8,9 };
     int size = sizeof(actual) / sizeof(int);
     SelectionSort(actual, size);
-    for (int i = 0; i < size; i++)
-    {
-        if (!(actual[i] == expected[i]))
-        {
-            return 0;
-        }
-    }
-    return 1;
+    int flag = Equals(actual, expected, size);
+    return flag;
 }
 
 int TestInsertionSort()
@@ -114,14 +99,8 @@ int TestInsertionSort()
     int expected[] = { 0,1,2,3,4,5,6,7,8,9 };
     int size = sizeof(actual) / sizeof(int);
     InsertionSort(actual, size);
-    for (int i = 0; i < size; i++)
-    {
-        if (!(actual[i] == expected[i]))
-        {
-            return 0;
-        }
-    }
-    return 1;
+    int flag = Equals(actual, expected, size);
+    return flag;
 }
 
 int TestBinarySearchPasses()
@@ -140,6 +119,16 @@ int TestBinarySearchFails()
     int target = 10;
     int index = BinarySearch(array, size, target);
     return index == -1;
+}
+
+int TestQuickSort()
+{
+    int actual[] = { 0,9,1,8,5,6,7,3,2,4 };
+    int expected[] = { 0,1,2,3,4,5,6,7,8,9 };
+    int size = sizeof(actual) / sizeof(int);
+    QuickSort(actual, 0, size-1);
+    int flag = Equals(actual, expected, size);
+    return flag;
 }
 
 void passed()
@@ -248,6 +237,15 @@ int main()
         failed();
     }
 
+    printf("TestQuickSort...");
+    if(TestQuickSort())
+    {
+        passed();
+    }
+    else
+    {
+        failed();
+    }
 
     return 0;
 }
