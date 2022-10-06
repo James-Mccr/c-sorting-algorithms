@@ -1,4 +1,4 @@
-SHARED = obj\shared\Generate.o obj\shared\Search.o obj\shared\Sort.o
+SHARED = obj\shared\Generate.o obj\shared\Search.o obj\shared\Sort.o obj\shared\Console.o
 
 all: clean setup compile link
 
@@ -11,6 +11,7 @@ compile:
 	gcc -g -c src\Generate.c -o obj\shared\Generate.o
 	gcc -g -c src\Search.c -o obj\shared\Search.o
 	gcc -g -c src\Sort.c -o obj\shared\Sort.o
+	gcc -g -c src\Console.c -o obj\shared\Console.o
 	gcc -g -c src\BinarySearch.c -Iheaders -o obj\BinarySearch.o
 	gcc -g -c src\SelectionSort.c -Iheaders -o obj\SelectionSort.o
 	gcc -g -c src\InsertionSort.c -Iheaders -o obj\InsertionSort.o
