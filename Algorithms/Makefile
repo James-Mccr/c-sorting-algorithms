@@ -16,6 +16,7 @@ compile:
 	gcc -g -c src\InsertionSort.c -Iheaders -o obj\InsertionSort.o
 	gcc -g -c src\MergeSort.c -Iheaders -o obj\MergeSort.o
 	gcc -g -c src\QuickSort.c -Iheaders -o obj\QuickSort.o
+	gcc -g -c src\BubbleSort.c -Iheaders -o obj\BubbleSort.o
 	gcc -g -c src\Test.c -Iheaders -o obj\Test.o
 
 link: compile
@@ -24,6 +25,7 @@ link: compile
 	gcc obj\InsertionSort.o $(SHARED) -o bin\InsertionSort.exe
 	gcc obj\MergeSort.o $(SHARED) -o bin\MergeSort.exe
 	gcc obj\QuickSort.o $(SHARED) -o bin\QuickSort.exe
+	gcc obj\BubbleSort.o $(SHARED) -o bin\BubbleSort.exe
 	gcc obj\Test.o $(SHARED) -o bin\Test.exe
 
 clean:

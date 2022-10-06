@@ -9,4 +9,6 @@ int MergeSort(int* array, int size);
 
 int QuickSort(int* array, int left, int right);
 
+int BubbleSort(int* array, int size);
+
 #endif
