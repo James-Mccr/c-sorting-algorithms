@@ -189,3 +189,49 @@ int BubbleSort(int* array, int size)
         }
     }
 }
+
+// Orders the given node and direct children (if any) into a max-heap structure
+int MaxHeapify(int* array, int size, int parentIndex)
+{
+    int nodeIndex = parentIndex;
+    int leftChildIndex = (2*parentIndex)+1;   // assume it exists, we'll check later
+    int rightChildIndex = (2*parentIndex)+2;  
+
+    if (leftChildIndex < size && array[leftChildIndex] > array[nodeIndex])
+    {
+        nodeIndex = leftChildIndex;
+    }
+
+    if (rightChildIndex < size && array[rightChildIndex] > array[nodeIndex])
+    {
+        nodeIndex = rightChildIndex;
+    }
+
+    if (nodeIndex != parentIndex)
+    {
+        Swap(&array[parentIndex], &array[nodeIndex]);
+
+        MaxHeapify(array, size, nodeIndex); // recurse in case swap affects subtree (any of the descendants)
+    }
+}
+
+int HeapSort(int* array, int size)
+{
+    // build max-heap
+    // (size/2)-1 is the last non-leaf index
+    for (int internalNodeIndex = (size/2)-1; internalNodeIndex >= 0; internalNodeIndex--)   
+    {
+        MaxHeapify(array, size, internalNodeIndex);
+    }
+
+    for (int i = size-1; i >= 0; i--)
+    {   
+        // move root node to end of array because it is in ascending order and we can ignore it for future iterations
+        Swap(&array[0], &array[i]);
+
+        // build max-heap
+        MaxHeapify(array, i, 0);
+    }
+
+    return 0;
+}

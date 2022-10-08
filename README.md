@@ -6,6 +6,7 @@ Available algorithms are:
 - Merge sort
 - Quick sort
 - Bubble sort
+- Heap sort
 - Binary search
 
 Projects were developed on Windows 10 with Visual Studio Code using mingw64 unless stated otherwise.

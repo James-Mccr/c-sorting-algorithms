@@ -141,6 +141,16 @@ int TestBubbleSort()
     return flag;
 }
 
+int TestHeapSort()
+{
+    int actual[] = { 0,9,1,8,5,6,7,3,2,4 };
+    int expected[] = { 0,1,2,3,4,5,6,7,8,9 };
+    int size = sizeof(actual) / sizeof(int);
+    HeapSort(actual, size);
+    int flag = Equals(actual, expected, size);
+    return flag;
+}
+
 void passed()
 {
     printf("PASSED\n");
@@ -259,6 +269,16 @@ int main()
 
     printf("TestBubbleSort...");
     if (TestBubbleSort())
+    {
+        passed();
+    }
+    else
+    {
+        failed();
+    }
+
+    printf("TestHeapSort...");
+    if (TestHeapSort())
     {
         passed();
     }
