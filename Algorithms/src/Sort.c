@@ -235,3 +235,52 @@ int HeapSort(int* array, int size)
 
     return 0;
 }
+
+int CountSort(int* array, int size)
+{
+    int min = array[0];
+    int max = min;
+    for (int i = 1; i < size; i++)
+    {
+        if (array[i] < min)
+        {
+            min = array[i];
+        } 
+        else if (array[i] > max)
+        {
+            max = array[i];
+        }
+    }
+
+    int range = max - min + 1;
+
+    int* counts = calloc(range, sizeof(int));
+    int* output = malloc(size * sizeof(int));
+    for (int i = 0; i < size; i++)
+    {
+        counts[array[i] - min]++;
+    }
+
+    for (int i = 1; i < range; i++)
+    {
+        // cumulative count
+        counts[i] += counts[i-1];
+    }
+
+    for (int i = size-1; i >= 0; i--)
+    {
+        // rotate elements 1 to the right and set output
+        output[counts[array[i]-min]-1] = array[i];
+        counts[array[i]-min]--;
+    }
+
+    for (int i = 0; i < size; i++)
+    {
+        array[i] = output[i];
+    }
+
+    free(counts);
+    free(output);
+
+    return 0;
+}

@@ -19,6 +19,7 @@ compile:
 	gcc -g -c src\QuickSort.c -Iheaders -o obj\QuickSort.o
 	gcc -g -c src\BubbleSort.c -Iheaders -o obj\BubbleSort.o
 	gcc -g -c src\HeapSort.c -Iheaders -o obj\HeapSort.o
+	gcc -g -c src\CountSort.c -Iheaders -o obj\CountSort.o
 	gcc -g -c src\Test.c -Iheaders -o obj\Test.o
 
 link: compile
@@ -29,6 +30,7 @@ link: compile
 	gcc obj\QuickSort.o $(SHARED) -o bin\QuickSort.exe
 	gcc obj\BubbleSort.o $(SHARED) -o bin\BubbleSort.exe
 	gcc obj\HeapSort.o $(SHARED) -o bin\HeapSort.exe
+	gcc obj\CountSort.o $(SHARED) -o bin\CountSort.exe
 	gcc obj\Test.o $(SHARED) -o bin\Test.exe
 
 clean:

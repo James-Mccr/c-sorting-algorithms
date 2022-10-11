@@ -10,6 +10,7 @@ int min = 0;
 int max = 10;
 int size = 100000;
 int seed = 0;
+int expected[10] = { 0,1,2,3,4,5,6,7,8,9 };
 
 int Equals(int* a, int* b, int size)
 {
@@ -73,36 +74,6 @@ int TestGenerateSeed()
     return flag;
 }
 
-int TestMergeSort()
-{
-    int actual[] = { 0,9,1,8,5,6,7,3,2,4 };
-    int expected[] = { 0,1,2,3,4,5,6,7,8,9 };
-    int size = sizeof(actual) / sizeof(int);
-    MergeSort(actual, size);
-    int flag = Equals(actual, expected, size);
-    return flag;
-}
-
-int TestSelectionSort()
-{
-    int actual[] = { 0,9,1,8,5,6,7,3,2,4 };
-    int expected[] = { 0,1,2,3,4,5,6,7,8,9 };
-    int size = sizeof(actual) / sizeof(int);
-    SelectionSort(actual, size);
-    int flag = Equals(actual, expected, size);
-    return flag;
-}
-
-int TestInsertionSort()
-{
-    int actual[] = { 0,9,1,8,5,6,7,3,2,4 };
-    int expected[] = { 0,1,2,3,4,5,6,7,8,9 };
-    int size = sizeof(actual) / sizeof(int);
-    InsertionSort(actual, size);
-    int flag = Equals(actual, expected, size);
-    return flag;
-}
-
 int TestBinarySearchPasses()
 {
     int array[] = { 0,1,2,3,4,5,6,7,8,9 };
@@ -121,10 +92,36 @@ int TestBinarySearchFails()
     return index == -1;
 }
 
+int TestSelectionSort()
+{
+    int actual[] = { 0,9,1,8,5,6,7,3,2,4 };
+    int size = sizeof(actual) / sizeof(int);
+    SelectionSort(actual, size);
+    int flag = Equals(actual, expected, size);
+    return flag;
+}
+
+int TestInsertionSort()
+{
+    int actual[] = { 0,9,1,8,5,6,7,3,2,4 };
+    int size = sizeof(actual) / sizeof(int);
+    InsertionSort(actual, size);
+    int flag = Equals(actual, expected, size);
+    return flag;
+}
+
+int TestMergeSort()
+{
+    int actual[] = { 0,9,1,8,5,6,7,3,2,4 };
+    int size = sizeof(actual) / sizeof(int);
+    MergeSort(actual, size);
+    int flag = Equals(actual, expected, size);
+    return flag;
+}
+
 int TestQuickSort()
 {
     int actual[] = { 0,9,1,8,5,6,7,3,2,4 };
-    int expected[] = { 0,1,2,3,4,5,6,7,8,9 };
     int size = sizeof(actual) / sizeof(int);
     QuickSort(actual, 0, size-1);
     int flag = Equals(actual, expected, size);
@@ -134,7 +131,6 @@ int TestQuickSort()
 int TestBubbleSort()
 {
     int actual[] = { 0,9,1,8,5,6,7,3,2,4 };
-    int expected[] = { 0,1,2,3,4,5,6,7,8,9 };
     int size = sizeof(actual) / sizeof(int);
     BubbleSort(actual, size);
     int flag = Equals(actual, expected, size);
@@ -144,9 +140,17 @@ int TestBubbleSort()
 int TestHeapSort()
 {
     int actual[] = { 0,9,1,8,5,6,7,3,2,4 };
-    int expected[] = { 0,1,2,3,4,5,6,7,8,9 };
     int size = sizeof(actual) / sizeof(int);
     HeapSort(actual, size);
+    int flag = Equals(actual, expected, size);
+    return flag;
+}
+
+int TestCountSort()
+{
+    int actual[] = { 0,9,1,8,5,6,7,3,2,4 };
+    int size = sizeof(actual) / sizeof(int);
+    CountSort(actual, size);
     int flag = Equals(actual, expected, size);
     return flag;
 }
@@ -162,130 +166,61 @@ void failed()
     exit(1);
 }
 
+void AssertSuccess(int flag)
+{
+    if (flag)
+    {
+        passed();
+    } 
+    else
+    {
+        failed();
+    }
+}
+
 int main()
 {
     // generation
     printf("TestGenerateMin...");
-    if (TestGenerateMin())
-    {
-        passed();
-    } 
-    else
-    {
-        failed();
-    }
+    AssertSuccess(TestGenerateMin());
 
     printf("TestGenerateMax...");
-    if (TestGenerateMax())
-    {
-        passed();
-    } 
-    else 
-    {
-        failed();
-    }
+    AssertSuccess(TestGenerateMax());
 
     printf("TestGenerateSize...");
-    if (TestGenerateSize())
-    {
-        passed();
-    }
-    else
-    {
-        failed();
-    }
+    AssertSuccess(TestGenerateSize());
     
     printf("TestGenerateSeed...");
-    if (TestGenerateSeed())
-    {
-        passed();
-    }
-    else 
-    {
-        failed();
-    }
-
-    // sort
-    printf("TestSelectionSort...");
-    if (TestSelectionSort())
-    {
-        passed();
-    }
-    else 
-    {
-        failed();
-    }
-
-    printf("TestInsertionSort...");
-    if (TestInsertionSort())
-    {
-        passed();
-    }
-    else
-    {
-        failed();
-    }
+    AssertSuccess(TestGenerateSeed());
 
     // search
     printf("TestBinarySearchPasses...");
-    if (TestBinarySearchPasses())
-    {
-        passed();
-    }
-    else
-    {
-        failed();
-    }
+    AssertSuccess(TestBinarySearchPasses());
 
     printf("TestBinarySearchFails...");
-    if (TestBinarySearchFails())
-    {
-        passed();
-    }
-    else
-    {
-        failed();
-    }
+    AssertSuccess(TestBinarySearchFails());
+
+    // sort
+    printf("TestSelectionSort...");
+    AssertSuccess(TestSelectionSort());
+
+    printf("TestInsertionSort...");
+    AssertSuccess(TestInsertionSort());
 
     printf("TestMergeSort...");
-    if(TestMergeSort())
-    {
-        passed();
-    }
-    else
-    {
-        failed();
-    }
+    AssertSuccess(TestMergeSort());
 
     printf("TestQuickSort...");
-    if(TestQuickSort())
-    {
-        passed();
-    }
-    else
-    {
-        failed();
-    }
+    AssertSuccess(TestQuickSort());
 
     printf("TestBubbleSort...");
-    if (TestBubbleSort())
-    {
-        passed();
-    }
-    else
-    {
-        failed();
-    }
+    AssertSuccess(TestBubbleSort());
 
     printf("TestHeapSort...");
-    if (TestHeapSort())
-    {
-        passed();
-    }
-    else
-    {
-        failed();
-    }
+    AssertSuccess(TestHeapSort());
+
+    printf("TestCountSort...");
+    AssertSuccess(TestCountSort());
 
     return 0;
 }

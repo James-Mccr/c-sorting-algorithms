@@ -13,4 +13,6 @@ int BubbleSort(int* array, int size);
 
 int HeapSort(int* array, int size);
 
+int CountSort(int* array, int size);
+
 #endif
