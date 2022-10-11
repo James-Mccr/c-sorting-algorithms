@@ -238,6 +238,7 @@ int HeapSort(int* array, int size)
 
 int CountSort(int* array, int size)
 {
+    // Get min and max since count array depends on the range of values
     int min = array[0];
     int max = min;
     for (int i = 1; i < size; i++)
@@ -256,21 +257,23 @@ int CountSort(int* array, int size)
 
     int* counts = calloc(range, sizeof(int));
     int* output = malloc(size * sizeof(int));
+
+    //  count each distinct value from input
     for (int i = 0; i < size; i++)
     {
         counts[array[i] - min]++;
     }
 
+    // sum counts to get position of the values within output (this is not the index)
     for (int i = 1; i < range; i++)
     {
-        // cumulative count
         counts[i] += counts[i-1];
     }
 
+    // sort values into output
     for (int i = size-1; i >= 0; i--)
-    {
-        // rotate elements 1 to the right and set output
-        output[counts[array[i]-min]-1] = array[i];
+    {    
+        output[counts[array[i]-min]-1] = array[i]; // offset position 1 to the right to get index
         counts[array[i]-min]--;
     }
 
