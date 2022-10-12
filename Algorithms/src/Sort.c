@@ -287,3 +287,66 @@ int CountSort(int* array, int size)
 
     return 0;
 }
+
+void ByteCountSort(int* array, int size, int byteIndex)
+{
+    int mod = 256;
+    int* output = malloc(size * sizeof(int));
+    int* counts = calloc(mod, sizeof(int));
+
+    // count bytes
+    for (int i = 0; i < size; i++)
+    {
+        counts[(array[i] >> (byteIndex * 8)) & 255]++;
+    }
+
+    // sum counts to get positions
+    for (int i = 1; i < mod; i++)
+    {
+        counts[i] += counts[i-1];
+    }
+
+    // sort output
+    for (int i = size-1; i >= 0; i--)
+    {
+        int offset = array[i] >> (byteIndex *8) & 255;
+        output[counts[offset]-1] = array[i];
+        counts[offset]--;
+    }
+
+    for (int i = 0; i < size; i++)
+    {
+        array[i] = output[i];
+    }
+
+    free(counts);
+    free(output);
+}
+
+int RadixSort(int* array, int size)
+{
+    // compute xor value for each byte in an integer
+    int xorFlip = 0;
+    for (int byte = 0; byte < sizeof(int); byte++)
+    {
+        xorFlip |= 128 << (8 * byte); 
+    } 
+
+    // flip bytes
+    for (int i = 0; i < size; i++)
+    {
+        array[i] ^= xorFlip; // set MSB for each byte
+    }
+
+    // Sort on bytes (radix 256)
+    for (int byteIndex = 0; byteIndex < sizeof(int); byteIndex++)
+    {
+        ByteCountSort(array, size, byteIndex);
+    }
+
+    // unflip bytes
+    for (int i = 0; i < size; i++)
+    {
+        array[i] ^= xorFlip;
+    }
+}

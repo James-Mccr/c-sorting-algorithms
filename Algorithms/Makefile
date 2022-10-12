@@ -20,6 +20,7 @@ compile:
 	gcc -g -c src\BubbleSort.c -Iheaders -o obj\BubbleSort.o
 	gcc -g -c src\HeapSort.c -Iheaders -o obj\HeapSort.o
 	gcc -g -c src\CountSort.c -Iheaders -o obj\CountSort.o
+	gcc -g -c src\RadixSort.c -Iheaders -o obj\RadixSort.o
 	gcc -g -c src\Test.c -Iheaders -o obj\Test.o
 
 link: compile
@@ -31,6 +32,7 @@ link: compile
 	gcc obj\BubbleSort.o $(SHARED) -o bin\BubbleSort.exe
 	gcc obj\HeapSort.o $(SHARED) -o bin\HeapSort.exe
 	gcc obj\CountSort.o $(SHARED) -o bin\CountSort.exe
+	gcc obj\RadixSort.o $(SHARED) -o bin\RadixSort.exe
 	gcc obj\Test.o $(SHARED) -o bin\Test.exe
 
 clean:

@@ -15,4 +15,6 @@ int HeapSort(int* array, int size);
 
 int CountSort(int* array, int size);
 
+int RadixSort(int* array, int size);
+
 #endif
