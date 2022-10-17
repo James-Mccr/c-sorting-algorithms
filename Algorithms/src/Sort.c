@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <math.h>
 
 int Swap(int* a, int* b)
 {
@@ -349,4 +350,70 @@ int RadixSort(int* array, int size)
     {
         array[i] ^= xorFlip;
     }
+}
+
+typedef struct {
+    int* array;
+    int size;
+} Bucket;
+
+int BucketSort(int* array, int size)
+{
+    Bucket* buckets = calloc(size, sizeof(Bucket)); // calloc also initialises buckets since the defaults are 0
+
+    // get min and max
+    int min = array[0], max = min;
+    for (int i = 1; i < size; i++)
+    {
+        if (array[i] < min)
+        {
+            min = array[i];
+        }
+        else if (array[i] > max)
+        {
+            max = array[i];
+        }
+    }
+
+    int range = max - min + 1;  // bounds are inclusive, so add 1
+    int threshold = ceil((float)range / size); // fractional thresholds require extra bucket
+
+    // split into buckets
+    for (int i = 0; i < size; i++)
+    {
+        int bucketIndex = (array[i] - min) / threshold;
+        Bucket* bucket = &buckets[bucketIndex];
+        bucket -> size++;
+        if (bucket -> array == NULL)
+        {
+            bucket -> array = malloc(sizeof(int));
+        }
+        else 
+        {
+            bucket -> array = realloc(bucket -> array, bucket -> size * sizeof(int));
+        }
+        bucket -> array[bucket -> size-1] = array[i];
+    }
+
+    // sort each bucket
+    for (int bucketIndex = 0; bucketIndex < size; bucketIndex++)
+    {
+        CountSort(buckets[bucketIndex].array, buckets[bucketIndex].size);
+    }
+
+    // copy to original array
+    int j = 0;
+    for (int bucketIndex = 0; bucketIndex < size; bucketIndex++)
+    {
+        Bucket* bucket = &buckets[bucketIndex];
+        for (int i = 0; i < bucket -> size; i++)
+        {
+            array[j] = bucket -> array[i];
+            j++;
+        }
+        free(bucket -> array);
+    }
+    free(buckets);
+
+    return 0;
 }

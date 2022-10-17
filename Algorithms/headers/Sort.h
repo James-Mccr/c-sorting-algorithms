@@ -17,4 +17,6 @@ int CountSort(int* array, int size);
 
 int RadixSort(int* array, int size);
 
+int BucketSort(int* array, int size);
+
 #endif

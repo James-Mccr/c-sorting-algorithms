@@ -12,8 +12,8 @@ int min = 0;
 int max = 10;
 int size = 100000;
 int seed = 0;
-int expected[] = { -1,0,1,2,3,4,5,6,7,8,9 };
-int actual[] = { 4,7,0,9,2,6,1,5,3,8,-1 };
+int expected[] = { -10,0,1,2,3,4,5,6,7,8,9 };
+int actual[] = { 4,7,0,9,2,6,1,5,3,8,-10 };
 
 int* CreateTestArray()
 {
@@ -175,6 +175,15 @@ int TestRadixSort()
     return flag;
 }
 
+int TestBucketSort()
+{
+    int* actual = CreateTestArray();
+    BucketSort(actual, ARRAY_SIZE);
+    int flag = Equals(actual, expected, ARRAY_SIZE);
+    free(actual);
+    return flag;
+}
+
 void passed()
 {
     printf("PASSED\n");
@@ -244,6 +253,9 @@ int main()
 
     printf("TestRadixSort...");
     AssertSuccess(TestRadixSort());
+
+    printf("TestBucketSort...");
+    AssertSuccess(TestBucketSort());
 
     return 0;
 }
