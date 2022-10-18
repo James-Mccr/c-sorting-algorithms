@@ -19,8 +19,11 @@ int SelectionSort(int* array, int size)
 {
     for (int i = 0; i < size-1; i++)
     {
+        // iterate unsorted elements
         for (int j = i+1; j < size; j++)
         {
+            // move lower values to start of the unsorted elements
+            // after iteration it will become the minimum within the subset
             if (array[i] > array[j])
             {
                 Swap(&array[i], &array[j]);
@@ -35,18 +38,23 @@ int InsertionSort(int* array, int size)
 {
     for (int i = 1; i < size; i++)
     {
-        int t = array[i];
+        int key = array[i];
         for (int j = i-1; j >= 0; j--)
         {
-            if (t >= array[j])      
+            if (key >= array[j])      
             {
-                array[j+1] = t;
+                // key >= element from sorted subset, thus insert after
+                array[j+1] = key;
                 break;
             }
+
+            // key < element from sorted subset, shift element up
             array[j+1] = array[j];
+
             if (j == 0)
             {
-                array[0] = t;
+                // key is minimum within sorted subset
+                array[0] = key;
                 break;
             }
         }
@@ -69,22 +77,20 @@ int Merge(int* array, int* array2, int left, int mid, int right)
 
     for (iMerge = left; iMerge < right; iMerge++)
     {
-        if (iLeft <= mid && iRight <= right)   // check bounds
+        if (iLeft > mid || iRight > right)   // check bounds
         {
-            if (array2[iLeft] <= array2[iRight])    // output will be in ascending order
-            {
-                array[iMerge] = array2[iLeft];  
-                iLeft++;
-            }
-            else 
-            {
-                array[iMerge] = array2[iRight];
-                iRight++;
-            }
+            break;
+        }
+        
+        if (array2[iLeft] <= array2[iRight])    // output will be in ascending order
+        {
+            array[iMerge] = array2[iLeft];  
+            iLeft++;
         }
         else 
         {
-            break;
+            array[iMerge] = array2[iRight];
+            iRight++;
         }
     }
 
@@ -398,7 +404,7 @@ int BucketSort(int* array, int size)
     // sort each bucket
     for (int bucketIndex = 0; bucketIndex < size; bucketIndex++)
     {
-        CountSort(buckets[bucketIndex].array, buckets[bucketIndex].size);
+        InsertionSort(buckets[bucketIndex].array, buckets[bucketIndex].size);
     }
 
     // copy to original array
